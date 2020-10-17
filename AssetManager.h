@@ -1,10 +1,8 @@
-// --- Assets.h ---
+#ifndef ASSETMANAGER_H
+#define ASSETMANAGER_H
 
-#ifndef ASSETS_H
-#define ASSETS_H
 
 #include "Utility.h"
-#include <map>
 #include "Object.h"
 #include "Graphics.h"
 
@@ -13,13 +11,23 @@ class Engine;
 class AssetManager {
 public:
     AssetManager() {}
-    ~AssetManager();
-    void init();
-
-    std::list<Object*> allObjectTypes;
+    void init(std::list<Object*>& menuRotationButtons, std::list<Object*>& menuLevelButtons, std::list<Object*>& menuOptionButtons, 
+            std::list<Object*>& menuTileButtons, std::list<Object*>& menuBlockButtons, std::list<Object*>& menuCharacterButtons, 
+            std::list<Object*>& menuObjectButtons);
+ 
     Graphics directionIndicator;
     
+    Graphics levelIcon;
+    Graphics rotationIcon;
     Graphics pIcon;
+    Graphics axeIcon;
+    Graphics doorIcon;
+
+    Graphics saveIcon;
+    Graphics saveAsIcon;
+    Graphics newLevelIcon;
+    Graphics changeLevelSizeIcon;
+
     Graphics pAttack;
     Graphics pClimb;
     Graphics pDash;
@@ -33,11 +41,9 @@ public:
     Graphics pWalk;
     Graphics pAttackWalk;
 
-    Graphics rotationIcon;
     Graphics rotation;
-
-    Graphics axeIcon;
     Graphics axe;
+    Graphics door;
 };
 
 

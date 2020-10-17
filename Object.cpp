@@ -7,32 +7,58 @@
 using std::string;
 using std::list;
 
-#include "FileSystem.h"
-
 Object::Object(string name, Graphics* sprite) 
     : name(name), sprite(sprite)
 {}
 
+Character::Character(std::string name, Graphics* attack, Graphics* climb, Graphics* dash, Graphics* death, Graphics* hurt, Graphics* idle, 
+            Graphics* jump, Graphics* run, Graphics* attackRun, Graphics* skid, Graphics* walk, Graphics* attackWalk, 
+            Graphics* directionIndicator, Vec3Df positionPlaced)
+    : Object(name, nullptr), attack(attack), climb(climb), dash(dash), death(death), hurt(hurt), idle(idle), jump(jump),
+            run(run), attackRun(attackRun), skid(skid), walk(walk), attackWalk(attackWalk), directionIndicator(directionIndicator) { 
+
+    orig = positionPlaced;
+}
+
 Player::Player(string name, Graphics* attack, Graphics* climb, Graphics* dash, Graphics* death, Graphics* hurt, Graphics* idle, 
         Graphics* jump, Graphics* run, Graphics* attackRun, Graphics* skid, Graphics* walk, Graphics* attackWalk, 
-        Graphics* directionIndicator)
-    : Object(name, nullptr), attack(attack), climb(climb), dash(dash), death(death), hurt(hurt), idle(idle), jump(jump),
-            run(run), attackRun(attackRun), skid(skid), walk(walk), attackWalk(attackWalk), directionIndicator(directionIndicator) {
-    dims = {34, 52, 34};
-    spriteDims = {112, 80};
-    drawingOffset = {-40, -80};
-    attackDims = {72, 52, 34};
+        Graphics* directionIndicator, Vec3Df positionPlaced)
+    : Character(name, attack, climb, dash, death, hurt, idle, jump, run, attackRun, skid, walk, attackWalk, 
+            directionIndicator, positionPlaced) {
+
+    dims = {34.0f, 52.0f, 34.0f};
+    spriteDims = {112.0f, 80.0f};
+    drawingOffset = {-40.0f, -80.0f};
+    attackDims = {72.0f, 52.0f, 34.0f};
 }
 
-
-Rotation::Rotation(string name, int id, Graphics* sprite)
-    : Object(name, sprite), id(id) {
-    dims = {54, 54, 54};
-    spriteDims = {54, 54};
-}
-
-Axe::Axe(string name, Graphics* sprite)
+Rotation::Rotation(std::string name, int id, Graphics* sprite, Vec3Df positionPlaced, Vec3Df linkedTo, int yRangeMin, int yRangeMax)
     : Object(name, sprite) {
-    dims = {32, 32, 54};
-    spriteDims = {32, 32};
+
+    this->id = id;
+    orig = positionPlaced;
+    linkedToOrig = linkedTo;
+    this->yRangeMin = yRangeMin;
+    this->yRangeMax = yRangeMax;
+    dims = {54.0f, 54.0f, 54.0f};
+    spriteDims = {54.0f, 54.0f};
+    pathRotation = "./Files/rotation_" + std::to_string(id) + "_.txt";
+}
+
+Axe::Axe(string name, Graphics* sprite, Vec3Df positionPlaced)
+    : Object(name, sprite) {
+
+    orig = positionPlaced;
+    dims = {32.0f, 32.0f, 54.0f};
+    spriteDims = {32.0f, 32.0f};
+}
+
+Door::Door(string name, Graphics* sprite, Vec3Df positionPlaced, bool isLinked, Vec3Df linkedTo)
+    : Object(name, sprite) {
+    
+    orig = positionPlaced;
+    this->isLinked = isLinked;
+    linkedToOrig = linkedTo;
+    dims = {54.0f, 40.0f, 54.0f};
+    spriteDims = {54.0f, 40.0f};
 }

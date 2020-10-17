@@ -3,19 +3,26 @@
 
 #include "olcPixelGameEngine.h"
 
-#include "Animation.h"
-#include "ObjectType.h"
 
 class Graphics {
 public:
     Graphics() {}
-    ~Graphics();
-    void load(std::string filename);
+    ~Graphics() {
+        delete sprite;
+        delete decal;
+    }
+    void load(std::string filename) {
+        sprite = new olc::Sprite(filename);
+        decal = new olc::Decal(sprite);
+    }
 
     olc::Sprite* sprite = nullptr;
     olc::Decal* decal = nullptr;
-    Animation* animation = nullptr;
-    ObjectType* objectType = nullptr;
+
+    int numFrames;
+    float frameLength;
+    float waitAtEnd;
+    bool busy = false;
 };
 
 

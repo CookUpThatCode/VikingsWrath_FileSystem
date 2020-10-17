@@ -59,7 +59,8 @@ struct Quad     // collections of 4 points. each has a tile with sprite info
 struct Cell    // collection of 6 faces, each with tile coordinates on sprite sheet
 {
 	bool placed = false;
-	olc::vi2d tiles[6]{ };   // sprite sheet coordinates for 6 faces
+	//olc::vi2d tiles[6]{ };   // sprite sheet coordinates for 6 faces
+	int tiles[6];
 };
 
 
@@ -67,12 +68,12 @@ struct Cell    // collection of 6 faces, each with tile coordinates on sprite sh
 
 enum Face
 {
-	Floor = 0,
-	East = 1,
-	North = 2,
-	West = 3,
-	South = 4,
-	Top = 5
+	FLOOR = 0,
+	EAST = 1,
+	NORTH = 2,
+	WEST = 3,
+	SOUTH = 4,
+	TOP = 5
 };
 
 enum SpriteDirection {

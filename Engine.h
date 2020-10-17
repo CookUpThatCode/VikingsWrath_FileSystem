@@ -7,9 +7,9 @@
 #include "World.h"
 #include "Utility.h"
 #include "Object.h"
-#include "Assets.h"
+#include "AssetManager.h"
 #include <fstream>
-#include "Files.h"
+#include "FileSystem.h"
 #include "Level.h"
 
 #include <unordered_map>
@@ -30,6 +30,8 @@ public:
 	void calculateVisibleFaces(std::array<Vec3Df, 8>& cube);
 	void addQuadFaces(const Vec3Di location, const float angle, const float pitch, const float scale,
 			const Vec3Df camera, std::vector<Quad>& drawList);
+
+	void getInput(); 
 	
 	FileSystem f;
 	

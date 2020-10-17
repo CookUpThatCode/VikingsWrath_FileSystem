@@ -15,8 +15,9 @@ public:
     virtual void onInteract(Object* actedUponBy) {}
     virtual void addLink(float x, float y, float z) {}
     virtual void setPathRotation(int id) {}
-    virtual void initPoints(ind div);
-    virtual void update(float x, float y, float z);
+    virtual void initPoints(int div) {}
+    virtual void update(float x, float y, float z) {}
+    int getID() {return id;}
     
     bool isFriendly = true;
     bool isLinked = false;
@@ -27,16 +28,19 @@ public:
     bool takingControls = false;
     bool subjectToGravity = false;
 
-protected:
-    std::string name;
     int id;                         // only for rotations
+    std::string name;
+    Vec3Df orig;  // origin
+    Vec3Df linkedToOrig;
+    int yRangeMin;
+    int yRangeMax;
+
+protected:
     Graphics* sprite;
     std::string pathRotation;
-    Vec3Df orig;  // origin
-    Vec3Di dims;  // dimensions
-    Vec2Di spriteDims;
+    Vec3Df dims;  // dimensions
+    Vec2Df spriteDims;
     Vec3Df drawingOrig;
-    Vec3Df linkedToOrigin;
     Vec3Df points[8];
     Vec3Df gravity;
     Vec3Df velocity;
@@ -45,20 +49,22 @@ protected:
 
 class Character : public Object {
 public:
-    Character();
-    void initPoints(int div) override;
-    void update(float x, float y, float z) override;
-    void onInteract(Object* actedUponBy) override;
-    void testing();                                                        // this is temporary. draw boxes around character for collision, attacks, etc.
+    Character(std::string name, Graphics* attack, Graphics* climb, Graphics* dash, Graphics* death, Graphics* hurt, Graphics* idle, 
+            Graphics* jump, Graphics* run, Graphics* attackRun, Graphics* skid, Graphics* walk, Graphics* attackWalk, 
+            Graphics* directionIndicator, Vec3Df positionPlaced);
+    void initPoints(int div) override {}
+    void update(float x, float y, float z) override {}
+    void onInteract(Object* actedUponBy) override {}
+    void testing() {}                                                        // this is temporary. draw boxes around character for collision, attacks, etc.
 
 protected:
-    Vec3Di attackDims;
+    Vec3Df attackDims;
     std::vector<Vec3Df> extraPoints;
     int directionIndicatorIndex;
     float directionIndicatorAngle;
     Graphics* directionIndicator;
     SpriteDirection spriteDir;
-    Vec2Di drawingOffset;
+    Vec2Df drawingOffset;
     Graphics* attack;
     Graphics* climb;
     Graphics* dash;
@@ -78,25 +84,37 @@ class Player : public Character {
 public:
     Player(std::string name, Graphics* attack, Graphics* climb, Graphics* dash, Graphics* death, Graphics* hurt, Graphics* idle, 
             Graphics* jump, Graphics* run, Graphics* attackRun, Graphics* skid, Graphics* walk, Graphics* attackWalk, 
-            Graphics* directionIndicator); 
+            Graphics* directionIndicator, Vec3Df positionPlaced); 
 };
 
 class Rotation : public Object {
 public:
-    Rotation(std::string name, int id, Graphics* sprite);
-    void onInteract(Object* actedUponBy) override;
-    void addLink(float x, float y, float z) override;
-    void setPathRotation(int id) override;
-    void initPoints(ind div) override;
-    void update(float x, float y, float z) override;
+    Rotation(std::string name, int id, Graphics* sprite, Vec3Df positionPlaced, Vec3Df linkedTo, int yRangeMin, int yRangeMax);
+    void onInteract(Object* actedUponBy) override {}
+    void addLink(float x, float y, float z) override {}
+    void setPathRotation(int id) override {}
+    void initPoints(int div) override {}
+    void update(float x, float y, float z) override {}
+
+    std::string pathRotation;
 };
 
 class Axe : public Object {
-    Axe(std::string name, Graphics* sprite);
-    void onInteract(Object* actedUponBy) override;
-    void addLink(float x, float y, float z) override;
-    void initPoints(ind div) override;
-    void update(float x, float y, float z) override;  
+public:
+    Axe(std::string name, Graphics* sprite, Vec3Df positionPlaced);
+    void onInteract(Object* actedUponBy) override {}
+    void addLink(float x, float y, float z) override {}
+    void initPoints(int div) override {}
+    void update(float x, float y, float z) override {} 
+};
+
+class Door : public Object {
+public:
+    Door(std::string name, Graphics* sprite, Vec3Df positionPlaced, bool isLinked, Vec3Df linkedTo);
+    void onInteract(Object* actedUponBy) override {}
+    void addLink(float x, float y, float z) override {}
+    void initPoints(int div) override {}
+    void update(float x, float y, float z) override {}
 };
 
 

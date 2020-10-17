@@ -3,7 +3,8 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "olcPixelGameEngine.h"
+#include <fstream>
+
 #include "Utility.h"
 
 class FileSystem;
@@ -11,15 +12,16 @@ class FileSystem;
 class World
 {
 public:
-	World() { }
+	World() {}
 	~World();
-	void Create(int width, int height, int depth);
+	void create(const std::string& pathLevelCells, int width, int height, int depth);
+	void save(const std::string& pathLevelCells);
+	void resize(int width, int height, int depth);
 	Cell& getCell(const Vec3Di& location);
 	
 	Vec3Di size;
 	Cell*** cells = nullptr;
 	Cell nullCell;
-
 
 };
 
